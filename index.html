@@ -95,7 +95,19 @@
     <p>© 2026 YourCompany. All Rights Reserved.</p>
   </div>
 </footer>
+<script>
+window.redirectToExternalURL = function ({ url }) {
+  if (!url) {
+    console.error("No URL received from voice tool");
+    return;
+  }
+
+  // Force hard navigation (works on GitHub Pages)
+  window.location.replace(url);
+};
+</script>
 
 <elevenlabs-convai agent-id="agent_6701kece77h0f83a2aqcykjdqqeg"></elevenlabs-convai><script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 </body>
 </html>
+
