@@ -7,6 +7,33 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script>
+  window.ElevenLabsWidgetConfig = {
+    clientTools: {
+      navigate: ({ url }) => {
+        console.log("➡️ navigate tool called with:", url);
+
+        if (!url) {
+          return "No URL provided";
+        }
+
+        // External links
+        if (url.startsWith("http")) {
+          window.open(url, "_blank", "noopener,noreferrer");
+          return `Opened ${url}`;
+        }
+
+        // Internal GitHub Pages-safe navigation
+        window.location.href = url;
+        return `Navigating to ${url}`;
+      }
+    }
+  };
+</script>
+<script src="https://elevenlabs.io/convai-widget/index.js"></script>
+
+<elevenlabs-convai agent-id="agent_7901kekr51p2fxfr3j3gjh38wvj2"></elevenlabs-convai>
+
 
 <!-- Header -->
 <header class="header">
@@ -101,12 +128,9 @@
   <!-- Navigation Tool Implementation -->
 
 
-<script src="https://elevenlabs.io/convai-widget/index.js"></script>
 
-<elevenlabs-convai agent-id="agent_7901kekr51p2fxfr3j3gjh38wvj2"></elevenlabs-convai>
-
-<script src="elevenlabs-tools.js" defer></script>
 
 </body>
 </html>
+
 
