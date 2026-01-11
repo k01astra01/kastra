@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = url;
         return `Navigating to ${url}`;
       }
-
+console.log('ElevenLabs widget detected');
+console.log('Navigate tool called with:', url);
     };
   });
 });
+
