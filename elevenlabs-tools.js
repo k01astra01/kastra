@@ -9,19 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
   widget.addEventListener('elevenlabs-convai:call', (event) => {
     event.detail.config.clientTools = {
 
-      redirectToExternalURL: ({ url }) => {
+      navigate: ({ url }) => {
         if (!url) return 'No URL provided';
 
-        window.open(url, '_blank', 'noopener,noreferrer');
-        return `Opened ${url}`;
-      },
+        // External link
+        if (url.startsWith('http')) {
+          window.open(url, '_blank', 'noopener,noreferrer');
+          return `Opened ${url}`;
+        }
 
-      navigateToPage: ({ pagePath }) => {
-        if (!pagePath) return 'No page path provided';
-
-        window.location.href = pagePath;
-        return `Navigating to ${pagePath}`;
+        // Internal navigation
+        window.location.href = url;
+        return `Navigating to ${url}`;
       }
+
     };
   });
 });
