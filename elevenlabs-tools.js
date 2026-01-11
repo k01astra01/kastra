@@ -1,30 +1,30 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const widget = document.querySelector('elevenlabs-convai');
+document.addEventListener("DOMContentLoaded", () => {
+  const widget = document.querySelector("elevenlabs-convai");
 
   if (!widget) {
-    console.warn('ElevenLabs widget not found');
+    console.error("❌ ElevenLabs widget not found");
     return;
   }
 
-  widget.addEventListener('elevenlabs-convai:call', (event) => {
+  widget.addEventListener("elevenlabs-convai:ready", (event) => {
+    console.log("✅ ElevenLabs widget ready");
+
     event.detail.config.clientTools = {
-
       navigate: ({ url }) => {
-        if (!url) return 'No URL provided';
+        console.log("➡️ Navigate tool called with:", url);
 
-        // External link
-        if (url.startsWith('http')) {
-          window.open(url, '_blank', 'noopener,noreferrer');
+        if (!url) return "No URL provided";
+
+        // External
+        if (url.startsWith("http")) {
+          window.open(url, "_blank", "noopener,noreferrer");
           return `Opened ${url}`;
         }
 
-        // Internal navigation
+        // Internal (GitHub Pages safe)
         window.location.href = url;
         return `Navigating to ${url}`;
       }
-console.log('ElevenLabs widget detected');
-console.log('Navigate tool called with:', url);
     };
   });
 });
-
