@@ -9,7 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     widget.addEventListener("elevenlabs-convai:call", (event) => {
       event.detail.config.clientTools = {
         navigate: ({ url }) => {
-          console.log("➡️ navigate tool called with:", url);
+  console.log("➡️ SPA navigate:", url);
+  navigateSPA(url);
+  return `Opening ${url.replace(".html", "")} page`;
+}
+
 
           if (!url) return "No URL provided";
 
@@ -27,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ ElevenLabs navigation tool registered");
   }, 100);
 });
+
 
 
 
