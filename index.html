@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>K-Astra</title>
 
-  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Optional: remove favicon 404 warning -->
   <link rel="icon" href="data:," />
 </head>
 
@@ -19,85 +16,29 @@
     <div class="container nav">
       <h1 class="logo">YourCompany</h1>
       <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="programs.html">Programs</a>
-        <a href="contacts.html">Contact</a>
+        <a href="index.html" data-page="index.html">Home</a>
+        <a href="about.html" data-page="about.html">About</a>
+        <a href="programs.html" data-page="programs.html">Programs</a>
+        <a href="contacts.html" data-page="contacts.html">Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- ================= HERO ================= -->
-  <section class="hero">
-    <div class="container">
-      <h2>Smart Digital Solutions for Growing Businesses</h2>
-      <p>
-        We provide modern software, automation, and AI-driven systems to help
-        businesses scale efficiently.
-      </p>
-      <a href="#" class="btn">Get Started</a>
-    </div>
-  </section>
+  <!-- ================= MAIN CONTENT (DYNAMIC) ================= -->
+  <main id="app-content">
 
-  <!-- ================= ABOUT ================= -->
-  <section class="section">
-    <div class="container grid">
-      <div>
-        <h3>Who We Are</h3>
+    <!-- HOME CONTENT -->
+    <section class="hero">
+      <div class="container">
+        <h2>Smart Digital Solutions for Growing Businesses</h2>
         <p>
-          We are a technology solutions provider focused on delivering reliable,
-          scalable, and user-friendly digital platforms for enterprises and
-          startups.
+          We provide modern software, automation, and AI-driven systems to help
+          businesses scale efficiently.
         </p>
       </div>
-      <div>
-        <h3>Why Choose Us</h3>
-        <ul>
-          <li>✔ Custom Software Development</li>
-          <li>✔ AI-Enabled Automation</li>
-          <li>✔ Secure & Scalable Systems</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ================= SERVICES ================= -->
-  <section class="section gray">
-    <div class="container">
-      <h3 class="center">Our Solutions</h3>
-
-      <div class="cards">
-        <div class="card">
-          <h4>ERP Systems</h4>
-          <p>Integrated enterprise solutions for operations, finance, and reporting.</p>
-        </div>
-
-        <div class="card">
-          <h4>CRM Platforms</h4>
-          <p>Customer relationship tools to manage sales, support, and engagement.</p>
-        </div>
-
-        <div class="card">
-          <h4>HR Management</h4>
-          <p>Employee management systems for payroll, attendance, and performance.</p>
-        </div>
-
-        <div class="card">
-          <h4>AI & Automation</h4>
-          <p>Chatbots, workflow automation, and intelligent decision systems.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CTA ================= -->
-  <section class="cta">
-    <div class="container">
-      <h3>Ready to Transform Your Business?</h3>
-      <p>Contact us today to discuss your project requirements.</p>
-      <a href="#" class="btn light">Contact Us</a>
-    </div>
-  </section>
+  </main>
 
   <!-- ================= FOOTER ================= -->
   <footer class="footer">
@@ -106,22 +47,47 @@
     </div>
   </footer>
 
-  <!-- =====================================================
-       ELEVENLABS – SINGLE, CLEAN, CORRECT IMPLEMENTATION
-       ===================================================== -->
+  <!-- ================= SPA NAVIGATION ================= -->
+  <script>
+    async function navigateSPA(url) {
+      const res = await fetch(url);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const newContent = doc.querySelector("main");
 
-  <!-- 1️⃣ Register client tools FIRST -->
+      if (!newContent) {
+        console.error("❌ <main> not found in", url);
+        return;
+      }
+
+      document.getElementById("app-content").innerHTML = newContent.innerHTML;
+      history.pushState({}, "", url);
+    }
+
+    // Handle menu clicks
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest("a[data-page]");
+      if (!link) return;
+
+      e.preventDefault();
+      navigateSPA(link.dataset.page);
+    });
+
+    // Back / forward support
+    window.addEventListener("popstate", () => {
+      navigateSPA(location.pathname.split("/").pop());
+    });
+  </script>
+
+  <!-- ================= ELEVENLABS TOOLS ================= -->
   <script src="elevenlabs-tools.js"></script>
 
-  <!-- 2️⃣ Load ElevenLabs widget -->
   <script src="https://elevenlabs.io/convai-widget/index.js"></script>
 
-  <!-- 3️⃣ Single widget instance (ONLY ONE) -->
   <elevenlabs-convai
-    agent-id="agent_5001keq1ygjses9synhcbsnfc6kf"
+    agent-id="agent_7901kekr51p2fxfr3j3gjh38wvj2"
     auto-open>
   </elevenlabs-convai>
 
 </body>
 </html>
-
