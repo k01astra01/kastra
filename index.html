@@ -35,4 +35,101 @@
           to help businesses scale efficiently.
         </p>
         <a href="#" class="btn">Get Started</a>
-      </d
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 YourCompany. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- =====================================================
+       1️⃣ ELEVENLABS WIDGET SCRIPT (LOAD ONCE ONLY)
+       ===================================================== -->
+  <script src="https://elevenlabs.io/convai-widget/index.js"></script>
+
+  <!-- =====================================================
+       2️⃣ ELEVENLABS NAVIGATION TOOL + SPA ROUTER
+       ===================================================== -->
+  <script>
+    console.log("🔹 Initializing ElevenLabs SPA navigation");
+
+    /* ---------- SPA PAGE LOADER ---------- */
+    async function loadPage(path) {
+      try {
+        const response = await fetch(path);
+        const html = await response.text();
+
+        const temp = document.createElement("div");
+        temp.innerHTML = html;
+
+        const newContent = temp.querySelector("main");
+        if (!newContent) throw new Error("No <main> found");
+
+        document.getElementById("app").innerHTML = newContent.innerHTML;
+        history.pushState({}, "", path);
+
+        console.log("✅ SPA loaded:", path);
+      } catch (err) {
+        console.error("❌ SPA load failed", err);
+        window.location.href = path; // fallback
+      }
+    }
+
+    /* ---------- NAV MENU CLICK ---------- */
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest("a[data-link]");
+      if (!link) return;
+
+      e.preventDefault();
+      loadPage(link.getAttribute("href"));
+    });
+
+    /* ---------- ELEVENLABS TOOL ---------- */
+    document.addEventListener("DOMContentLoaded", () => {
+      const widget = document.querySelector("elevenlabs-convai");
+
+      if (!widget) {
+        console.error("❌ ElevenLabs widget not found");
+        return;
+      }
+
+      widget.addEventListener("elevenlabs-convai:call", (event) => {
+        event.detail.config.clientTools = {
+          navigate: ({ url }) => {
+            console.log("➡️ navigate tool called:", url);
+
+            if (!url) return "No URL provided";
+
+            if (url.startsWith("http")) {
+              window.open(url, "_blank", "noopener,noreferrer");
+              return `Opened ${url}`;
+            }
+
+            loadPage(url);
+            return `Navigating to ${url}`;
+          }
+        };
+      });
+
+      console.log("✅ ElevenLabs navigation tool registered");
+    });
+
+    /* ---------- BACK / FORWARD ---------- */
+    window.addEventListener("popstate", () => {
+      loadPage(location.pathname);
+    });
+  </script>
+
+  <!-- =====================================================
+       3️⃣ ELEVENLABS WIDGET (ONLY ONE INSTANCE)
+       ===================================================== -->
+  <elevenlabs-convai
+    agent-id="agent_7901kekr51p2fxfr3j3gjh38wvj2">
+  </elevenlabs-convai>
+
+</body>
+</html>
