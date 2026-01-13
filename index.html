@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>K-Astra</title>
 
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:," />
 </head>
 
 <body>
@@ -16,90 +16,23 @@
     <div class="container nav">
       <h1 class="logo">YourCompany</h1>
       <nav>
-        <a href="index.html" data-page="index.html">Home</a>
-        <a href="about.html" data-page="about.html">About</a>
-        <a href="programs.html" data-page="programs.html">Programs</a>
-        <a href="contacts.html" data-page="contacts.html">Contact</a>
+        <a href="index.html" data-link>Home</a>
+        <a href="about.html" data-link>About</a>
+        <a href="programs.html" data-link>Programs</a>
+        <a href="contacts.html" data-link>Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- ================= MAIN CONTENT (DYNAMIC) ================= -->
-  <main id="app-content">
-
-    <!-- HOME CONTENT -->
+  <!-- ================= SPA CONTENT ROOT ================= -->
+  <main id="app">
+    <!-- Home content loads here -->
     <section class="hero">
       <div class="container">
         <h2>Smart Digital Solutions for Growing Businesses</h2>
         <p>
-          We provide modern software, automation, and AI-driven systems to help
-          businesses scale efficiently.
+          We provide modern software, automation, and AI-driven systems
+          to help businesses scale efficiently.
         </p>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 YourCompany. All Rights Reserved.</p>
-    </div>
-  </footer>
-
-  <!-- ================= SPA NAVIGATION ================= -->
-  <script>
-    async function navigateSPA(url) {
-      const res = await fetch(url);
-      const html = await res.text();
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const newContent = doc.querySelector("main");
-
-      if (!newContent) {
-        console.error("❌ <main> not found in", url);
-        return;
-      }
-
-      document.getElementById("app-content").innerHTML = newContent.innerHTML;
-      history.pushState({}, "", url);
-    }
-
-    // Handle menu clicks
-    document.addEventListener("click", (e) => {
-      const link = e.target.closest("a[data-page]");
-      if (!link) return;
-
-      e.preventDefault();
-      navigateSPA(link.dataset.page);
-    });
-
-    // Back / forward support
-    window.addEventListener("popstate", () => {
-      navigateSPA(location.pathname.split("/").pop());
-    });
-  </script>
-
-  <!-- ================= ELEVENLABS TOOLS ================= -->
-  <script src="elevenlabs-tools.js"></script>
-
-  <script src="https://elevenlabs.io/convai-widget/index.js"></script>
-
-  <elevenlabs-convai
-    agent-id="agent_2401ketz12fbf9eavyg240a8gw3c"
-    auto-open>
-  </elevenlabs-convai>
-  
-<!-- 1️⃣ Load widget -->
-<script src="https://elevenlabs.io/convai-widget/index.js"></script>
-
-<!-- 2️⃣ Tool logic -->
-<script src="elevenlabs-tools.js"></script>
-
-<!-- 3️⃣ Single widget instance -->
-<elevenlabs-convai agent-id="agent_7901kekr51p2fxfr3j3gjh38wvj2"></elevenlabs-convai>
-
-</body>
-</html>
-
-
-
+        <a href="#" class="btn">Get Started</a>
+      </d
